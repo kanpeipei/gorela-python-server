@@ -14,11 +14,9 @@ class AddAccountAPI(APIView):
   @transaction.atomic
   def post(self, request):
     serializer = AccountsSerializer(data=request.data)
-
     if serializer.is_valid():
       serializer.save()
       return Response(serializer.data, status=status.HTTP_201_CREATED)
-      
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class GetAccountAPI(APIView):
@@ -38,4 +36,15 @@ class GetAccountAPI(APIView):
     serializer = self.serializer_class(user)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+class UpdateAccountAPI(APIView):
+  permissions_classes = (permissions.AllowAny,)
+  serializer_class = AccountsSerializer
 
+  @transaction.atomic
+  def put(self, request, pk, format=None):
+    user = self.get_object(pk)
+    serializer = self.serializer_class(user, data=request.data)
+    if serializer.is_valid():
+      serializer.save()
+      return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
