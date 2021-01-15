@@ -26,8 +26,8 @@ class GetAccountAPI(APIView):
   @transaction.atomic
   def get_object(self, pk):
     try:
-      return User.objects.get(pk=pk)
-    except User.DoesNotExist:
+      return Accounts.objects.get(pk=pk)
+    except Accounts.DoesNotExist:
       raise Http404
 
   @transaction.atomic
