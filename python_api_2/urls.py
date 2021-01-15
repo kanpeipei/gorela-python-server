@@ -23,4 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^login', obtain_jwt_token),
     url(r'^users/', include('accounts.urls')),
+    url(r'^posts/', include('posts.urls')),
 ]
