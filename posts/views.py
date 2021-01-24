@@ -13,6 +13,7 @@ class PostsAPI(APIView):
   serializer_class = PostSerializer
 
   def get(self, request, format=None):
+    print("PostsAPI")
     posts = Post.objects.all().prefetch_related("tasks")
     serializer = self.serializer_class(posts, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
@@ -28,6 +29,7 @@ class GetPostAPI(APIView):
       raise Http404
 
   def get(self, request, pk, format=None):
+    print("get post!!!!!!!!!!!!!!!!!!!!!")
     post = self.get_object(pk)
     serializer = self.serializer_class(post)
     return Response(serializer.data, status=status.HTTP_200_OK)
