@@ -1,11 +1,12 @@
 from rest_framework import routers
 from django.urls import path, include
 
-from .views import GetPostAPI, PostsAPI, AddPostAPI
+from .views import PostAPI, GetPostsAPI, AddPostAPI, SwitchTaskAPI
 
 urlpatterns = [
-    path('', PostsAPI.as_view()),
+    path('', GetPostsAPI.as_view()),
     path('create/', AddPostAPI.as_view()),
-    path('<int:pk>/', GetPostAPI.as_view()),
+    path('<int:pk>/', PostAPI.as_view()),
+    path('tasks/<int:pk>/', SwitchTaskAPI.as_view()),
     path('<int:pk>/comment/', include('comments.urls')),
 ]

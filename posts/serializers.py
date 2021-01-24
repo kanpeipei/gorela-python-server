@@ -7,7 +7,7 @@ from comments.serializers import CommentSerializer
 class TaskSerializer(serializers.ModelSerializer):
   class Meta:
     model = Task
-    fields = ['content', 'is_done']
+    fields = ['id', 'content', 'is_done']
 
 class PostSerializer(serializers.ModelSerializer):
   user = AccountsSerializer(read_only=True)
