@@ -33,6 +33,11 @@ class PostAPI(APIView):
     serializer = self.serializer_class(post)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+  def delete(self, request, pk, format=None):
+    post = self.get_object(pk)
+    post.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
 class AddPostAPI(APIView):
   serializer_class = PostSerializer
 
