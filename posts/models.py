@@ -9,7 +9,7 @@ class Post(models.Model):
   title = models.CharField(verbose_name='title', max_length=100, blank=False)
   detail = models.CharField(verbose_name='detail', max_length=255, blank=True)
   limit = models.DateField(verbose_name='limit', auto_now=False, auto_now_add=False, blank=True)
-  user = models.ForeignKey(Accounts, verbose_name='user', on_delete=models.CASCADE)
+  user = models.ForeignKey(Accounts, verbose_name='user', on_delete=models.CASCADE, related_name='posts')
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)
 

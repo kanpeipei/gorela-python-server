@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import permissions, status
 from .models import Accounts
 from .serializers import AccountsSerializer
+from posts.serializers import AccountDetailSerializer
 
 
 # Create your views here.
@@ -11,7 +12,6 @@ class AddAccountAPI(APIView):
   permission_classes = (permissions.AllowAny,)
   serializer_class = AccountsSerializer
 
-  @transaction.atomic
   def post(self, request):
     serializer = AccountsSerializer(data=request.data)
     if serializer.is_valid():
@@ -20,8 +20,7 @@ class AddAccountAPI(APIView):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class GetAccountAPI(APIView):
-  permissions_classes = (permissions.AllowAny,)
-  serializer_class = AccountsSerializer
+  serializer_class = AccountDetailSerializer
 
   @transaction.atomic
   def get_object(self, pk):
@@ -30,17 +29,14 @@ class GetAccountAPI(APIView):
     except Accounts.DoesNotExist:
       raise Http404
 
-  @transaction.atomic
   def get(self, request, pk, format=None):
     user = self.get_object(pk)
     serializer = self.serializer_class(user)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 class UpdateAccountAPI(APIView):
-  permissions_classes = (permissions.AllowAny,)
   serializer_class = AccountsSerializer
 
-  @transaction.atomic
   def put(self, request, pk, format=None):
     user = self.get_object(pk)
     serializer = self.serializer_class(user, data=request.data)

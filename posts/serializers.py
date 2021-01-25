@@ -32,3 +32,19 @@ class PostSerializer(serializers.ModelSerializer):
     for task_data in tasks_data:
       Task.objects.create(post=post, **task_data)
     return post
+
+class PostByAccountSerializer(serializers.ModelSerializer):
+  tasks = TaskSerializer(many=True)
+  comments = CommentSerializer(many=True, read_only=True)
+  favorites = FavoriteSerializer(many=True, read_only=True)
+
+  class Meta:
+    model = Post
+    fields = ['id', 'title', 'detail', 'limit', 'tasks', 'comments', 'favorites']
+
+class AccountDetailSerializer(serializers.ModelSerializer):
+    posts = PostByAccountSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Accounts
+        fields = ('username', 'introduction', 'image', 'posts')
