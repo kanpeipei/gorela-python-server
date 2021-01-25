@@ -4,6 +4,7 @@ from .models import Post, Task
 from accounts.models import Accounts
 from accounts.serializers import AccountsSerializer
 from comments.serializers import CommentSerializer
+from favorites.serializers import FavoriteSerializer
 class TaskSerializer(serializers.ModelSerializer):
   class Meta:
     model = Task
@@ -14,10 +15,11 @@ class PostSerializer(serializers.ModelSerializer):
   user_id = serializers.PrimaryKeyRelatedField(queryset=Accounts.objects.all(), write_only=True)
   tasks = TaskSerializer(many=True)
   comments = CommentSerializer(many=True, read_only=True)
+  favorites = FavoriteSerializer(many=True, read_only=True)
 
   class Meta:
     model = Post
-    fields = ['id', 'title', 'detail', 'limit', 'user', 'user_id', 'tasks', 'comments']
+    fields = ['id', 'title', 'detail', 'limit', 'user', 'user_id', 'tasks', 'comments', 'favorites']
 
   def create(self, validated_data):
     tasks_data = validated_data.pop('tasks')
