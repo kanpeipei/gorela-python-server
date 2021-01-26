@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from .models import Post, Task
 from accounts.models import Accounts
-from accounts.serializers import AccountsSerializer
+from accounts.serializers import AccountsSerializer, FollowAccountSerializer, FollowerAccountSerializer
 from comments.serializers import CommentSerializer
 from favorites.serializers import FavoriteSerializer
 class TaskSerializer(serializers.ModelSerializer):
@@ -44,7 +44,15 @@ class PostByAccountSerializer(serializers.ModelSerializer):
 
 class AccountDetailSerializer(serializers.ModelSerializer):
     posts = PostByAccountSerializer(many=True, read_only=True)
+    follow_user = serializers.SerializerMethodField()
+    followed_user = serializers.SerializerMethodField()
 
     class Meta:
         model = Accounts
-        fields = ('username', 'introduction', 'image', 'posts')
+        fields = ('id' ,'username', 'introduction', 'image', 'posts', 'follow_user', 'followed_user')
+
+    def get_follow_user(self, instance):
+      return FollowAccountSerializer(instance.follow_user.all(), many=True).data
+
+    def get_followed_user(self, instance):
+      return FollowAccountSerializer(instance.followed_user.all(), many=True).data

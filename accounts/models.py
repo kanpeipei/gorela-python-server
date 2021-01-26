@@ -75,3 +75,9 @@ class Accounts(AbstractBaseUser):
         verbose_name = "accounts"
         verbose_name_plural = "Accounts"
 
+class Relation(models.Model):
+    user = models.ForeignKey(Accounts, verbose_name="user", on_delete=models.CASCADE, related_name="follow_user", null=True)
+    target_user = models.ForeignKey(Accounts, verbose_name="target_user", on_delete=models.CASCADE, related_name="followed_user", null=True)
+
+    def __str__(self):
+        return self.user.username

@@ -3,10 +3,11 @@ from django.conf.urls import url
 from django.urls import path
 from rest_framework_jwt.views import obtain_jwt_token
 
-from .views import AddAccountAPI, GetAccountAPI, UpdateAccountAPI
+from .views import AddAccountAPI, GetAccountAPI, UpdateAccountAPI, RelationAPI
 
 urlpatterns = [
     url(r'signup/', AddAccountAPI.as_view()),
     path('<int:pk>/', GetAccountAPI.as_view()),
     path('<int:pk>/update/', UpdateAccountAPI.as_view()),
+    path('follow/<int:user_id>/<int:target_user_id>/', RelationAPI.as_view()),
 ]
