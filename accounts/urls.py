@@ -8,6 +8,6 @@ from .views import AddAccountAPI, GetAccountAPI, UpdateAccountAPI, RelationAPI
 urlpatterns = [
     url(r'signup/', AddAccountAPI.as_view()),
     path('<int:pk>/', GetAccountAPI.as_view()),
-    path('<int:pk>/update/', UpdateAccountAPI.as_view()),
+    path('<int:pk>/edit/', UpdateAccountAPI.as_view()),
     path('follow/<int:user_id>/<int:target_user_id>/', RelationAPI.as_view()),
 ]

@@ -13,6 +13,11 @@ class AccountsSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return Accounts.objects.create_user(validated_data['username'],validated_data['password'])
 
+class UpdateAccountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Accounts
+        fields = ('id', 'username', 'introduction', 'image')
+
 class FollowAccountSerializer(serializers.ModelSerializer):
     # follow_user = AccountsSerializer(read_only=True)
     user_id = serializers.PrimaryKeyRelatedField(queryset=Accounts.objects.all(), write_only=True)
