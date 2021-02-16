@@ -20,7 +20,7 @@ class FavoriteAPI(APIView):
     post = self.get_object(Post, post_id)
     user = self.get_object(Accounts, user_id)
     favorite = Favorite.objects.create(post=post, user=user)
-    return Response(status=status.HTTP_201_CREATED)
+    return Response({post_id: post_id}, status=status.HTTP_201_CREATED)
 
   def delete(self, request, post_id, user_id, format=None):
     post = self.get_object(Post, post_id)

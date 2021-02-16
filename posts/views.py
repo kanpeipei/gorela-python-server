@@ -13,7 +13,7 @@ class GetPostsAPI(APIView):
   serializer_class = PostSerializer
 
   def get(self, request, format=None):
-    posts = Post.objects.all().prefetch_related("tasks")
+    posts = Post.objects.order_by('-created_at').prefetch_related("tasks")
     serializer = self.serializer_class(posts, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
